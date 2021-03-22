@@ -46,6 +46,7 @@ jobs:
 workflows:
   node-test-and-deploy:
     jobs:
+      - challenge
       - build-and-test
       - deploy-docker:
           requires:
