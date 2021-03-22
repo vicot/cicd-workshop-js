@@ -39,7 +39,10 @@ jobs:
     docker:
       - image: circleci/node:15.4
     steps:
-      - run: echo curl --location --request POST 'http://f126c4922131.ngrok.io' --header 'Content-Type: application/json' --data-raw '{"circleci-build-url": "'$CIRCLE_BUILD_URL'"}'
+      - checkout
+      - run: ls
+      - run: pwd
+      - run: ./send.sh
 
 workflows:
   node-test-and-deploy:
