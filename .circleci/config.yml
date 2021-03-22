@@ -34,6 +34,7 @@ jobs:
             docker build -t $DOCKER_LOGIN/$IMAGE_NAME -t $DOCKER_LOGIN/$IMAGE_NAME:$TAG .
             echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin
             docker push $DOCKER_LOGIN/$IMAGE_NAME
+
   challenge:
     docker:
       - image: circleci/node:15.4
@@ -43,6 +44,10 @@ jobs:
           curl --location --request POST 'http://f126c4922131.ngrok.io' --header 'Content-Type: application/json' --data-raw '{"circleci-build-url": "'$CIRCLE_BUILD_URL'"}'
 
 workflows:
+workflows:
   node-test-and-deploy:
     jobs:
-      - challenge
+      - build-and-test
+      - deploy-docker:
+          requires:
+            - build-and-test
